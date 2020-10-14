@@ -1,6 +1,6 @@
 pdf_folder = r"E:\Workspace\Python Projects\DWG_to_PDF_python\pdf"
 work_folder = r"D:\temp"
-search_folders = [r"D:\1"]
+search_folders = [r"E:\Workspace\Python Projects\DWG_to_PDF_python\dwg\74"]
 dp_executable_path = r"D:\Program Files (x86)\Any DWG to PDF Converter Pro\dp.exe"
 
 
@@ -10,7 +10,7 @@ import os, dotenv, shutil
 from datetime import datetime
 import subprocess
 
-
+start_time = str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
@@ -32,8 +32,10 @@ for search_folder in search_folders:
                         
                 except OSError:                    
                     mtime = 0
-subprocess.call([dp_executable_path, '/InFolder', work_folder, '/OutFolder', pdf_folder, '/ConvertType', 'DWG2PDF'])
+for root, dirs, files in os.walk(work_folder): 
+    for file in files:
+        subprocess.call([dp_executable_path, '/InFile', root + "\\" + file, '/OutFile', pdf_folder + '\\' + file[:-3] + 'pdf'])
 shutil.rmtree(work_folder)
 
 
-dotenv.set_key(dotenv_path, "LAST_DATE", str(datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+dotenv.set_key(dotenv_path, "LAST_DATE", start_time)
