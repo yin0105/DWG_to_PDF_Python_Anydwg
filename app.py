@@ -26,6 +26,8 @@ for search_folder in search_folders:
                 try:
                     source_file = root + "\\" + file
                     mtime = os.path.getctime(source_file)
+                    if mtime < os.path.getmtime(source_file):
+                        mtime = os.path.getmtime(source_file)
                     created_date = datetime.fromtimestamp(mtime)
                     if created_date > datetime.strptime(last_date, '%Y-%m-%d %H:%M:%S'):
                         shutil.copyfile(source_file, os.path.join(work_folder, file))
@@ -35,6 +37,7 @@ for search_folder in search_folders:
 for root, dirs, files in os.walk(work_folder): 
     for file in files:
         subprocess.call([dp_executable_path, '/InFile', root + "\\" + file, '/OutFile', pdf_folder + '\\' + file[:-3] + 'pdf'])
+        print('oh, ' + file[:-3] + 'pdf' + ' is updated because the last modified date/time is different')
 shutil.rmtree(work_folder)
 
 
