@@ -1,21 +1,10 @@
-from os.path import join, dirname
-from dotenv import load_dotenv
-import os, dotenv, shutil
+import os, shutil
 from datetime import datetime
-from datetime import timedelta
 import subprocess
 import threading
 
-START_SCRIPT_DATE = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-dotenv_path = join(dirname(__file__), '.env')
-load_dotenv(dotenv_path)
-last_date = os.environ.get('LAST_DATE')
-print("Last Date", last_date)
 
 def PDF_Converter():
-    START_SCRIPT_DATE = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-    
     #Please Update These Variables to Match your System Requirements
     pdf_folder = r"e:\pdfout"
     work_folder = r"e:\temp\dwg_converter"
